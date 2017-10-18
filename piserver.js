@@ -2,6 +2,7 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var path = require("path");
 
+// Custom modules.
 var databaseRef = require("./database_ref.js");
 var httpReqs = require("./httpreqs.js");
 
@@ -10,11 +11,9 @@ var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.use(express.static(path.join(__dirname, 'views')));
-
 var database = databaseRef.database;
 
-httpReqs();
+httpReqs(); // Call function for GET and POST requests.
 
 // Get all documents from CouchDB.
 app.get("/pi_couchstarwars", function(req, res) {
