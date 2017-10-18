@@ -16,6 +16,18 @@ var database = databaseRef.database;
 
 httpReqs();
 
+// Get all documents from CouchDB.
+app.get("/pi_couchstarwars", function(req, res) {
+    database.allDocs({include_docs: true}).then(function(result) {
+        res.jsonp(result.rows.map(function(item) {
+            return item.doc; // Respond with and return all documents.
+        }));
+
+    }, function(error) {
+        res.status(400).send(error); // Respond with error if error.
+    });
+});
+
 // Add document to CouchDB.
 app.post("/pi_couchstarwars", function(req, res){
     database.post(req.body).then(function(result){
@@ -24,7 +36,7 @@ app.post("/pi_couchstarwars", function(req, res){
     }, function(error){
         res.status(400).send(error);
     });
-}); 
+});
 
 app.listen(3000);
 console.log("Server is running on port 3000");
